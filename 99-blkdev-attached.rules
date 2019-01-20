@@ -1,0 +1,2 @@
+# https://github.com/dehesselle/bda
+ACTION=="add", SUBSYSTEM=="block", ENV{DEVTYPE}=="partition", TAG+="systemd", ENV{SYSTEMD_WANTS}="blkdev-attached@%E{ID_FS_UUID}.service"

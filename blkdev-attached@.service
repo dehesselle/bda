@@ -1,0 +1,5 @@
+# https://github.com/dehesselle/bda
+[Service]
+Type=oneshot
+#ExecStartPre=/bin/sleep 5
+ExecStart=/usr/local/sbin/blkdev-attached.sh %i
