@@ -1,5 +1,11 @@
 # https://github.com/dehesselle/bda
+[Unit]
+Description=Block Device Attached Event
+
 [Service]
 Type=oneshot
-#ExecStartPre=/bin/sleep 5
-ExecStart=/usr/local/sbin/blkdev-attached.sh %i
+# Check blkdev-attached@.service.d/01-default.conf for default values.
+# Create you own drop-ins to override as needed.
+# You will need to override ExecStart if you put blkdev-attached.sh into
+# a path where sysemd doesn't find it.
+ExecStart=blkdev-attached.sh $CONFIG_DIR %i
