@@ -1,24 +1,25 @@
+#
 # https://github.com/dehesselle/bda
-# sourced by /usr/local/sbin/blkdev-attached.sh
+# sourced by an instance of /etc/systemd/system/blkdev-attached@.service
+#
 
 function create_snapshot
 {
   local uuid=$1
   local subvol=$2
 
-  log_i "uuid=$uuid subvol=$subvol"
+  echo "uuid=$uuid subvol=$subvol"
 
   local tmp_dir=$(mktemp -d)
   mount -o subvolid=0 /dev/disk/by-uuid/$uuid $tmp_dir
   local rc=$?
 
   if [ $rc -eq 0 ]; then
-    btrfs sub snap -r $tmp_dir/$subvol $tmp_dir/$subvol@$(date +%y%m%d%H%M%S) \
->> $LOG_FILE
+    btrfs sub snap -r $tmp_dir/$subvol $tmp_dir/$subvol@$(date +%y%m%d%H%M%S)
     umount $tmp_dir
     rmdir $tmp_dir
   else
-    log_e "failed to mount $uuid (rc=$rc)"
+    echo "ERROR: failed to mount $uuid (rc=$rc)"
   fi
 }
 
