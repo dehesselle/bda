@@ -7,7 +7,7 @@ Description=Block Device Attached
 [Service]
 Type=oneshot
 # Run the payload we're piggy-backing below.
-ExecStart=/bin/bash -c "INSTANCE=%i; source <(sed '1,/^###PAYLOAD###$/d' /etc/systemd/system/%p@.service | cut -c 2-)"
+ExecStart=/bin/bash -c "INSTANCE=%i; source <(sed -n '/^###PAYLOAD###/,/^###END###/{//!p}' /etc/systemd/system/%p@.service | cut -c 2-)"
 
 ###PAYLOAD###
 #CONFIG_DIR=/etc/blkdev-attached.d
@@ -20,3 +20,4 @@ ExecStart=/bin/bash -c "INSTANCE=%i; source <(sed '1,/^###PAYLOAD###$/d' /etc/sy
 #  # nothing to do
 #  :
 #fi
+###END###
